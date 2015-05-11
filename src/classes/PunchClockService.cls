@@ -73,12 +73,9 @@ global class PunchClockService{
     
     private static CKSW_BASE__Timesheet__c createNewTimesheetForResource(Id resourceId)
     {
-        if (!DML_CustomExtension.isDMLAllowed(new CKSW_BASE__Timesheet__c(), new Set<String> {Constants.TIMESHEET_DATE_PROPERTY,Constants.TIMESHEET_STATUS_PROPERTY,Constants.TIMESHEET_EMPLOYEE_PROPERTY}, DML_CustomExtension.DMLActions.a_insert))
-            return null;
             
         Datetime datetimeToCreate;
-        list<string> settingsTimeList = CustomSettings.timesheetStartDay.split(':');
-        Time settingsTime = Time.newInstance(Integer.valueOf(settingsTimeList[0]), Integer.valueOf(settingsTimeList[1]), 0, 0);
+        Time settingsTime = Time.newInstance(0, 0, 0, 0);
         
         if (settingsTime < datetime.now().time())
             datetimeToCreate = datetime.newInstance(date.today(), settingsTime);
@@ -87,8 +84,6 @@ global class PunchClockService{
         
         CKSW_BASE__Timesheet__c newTimesheet = new CKSW_BASE__Timesheet__c(CKSW_BASE__Date__c = datetimeToCreate, CKSW_BASE__Status__c = 'In Progress', CKSW_BASE__Employee__c = resourceId);
         
-        system.debug('newTimesheet - ' + newTimesheet);
-
         insert newTimesheet;
         return newTimesheet;
     }
