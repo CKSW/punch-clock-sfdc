@@ -1,10 +1,8 @@
 @RestResource(urlMapping='/punchclock/*')
 global class PunchClockService{
 
+    
     public static String clockIn = 'Clock In';
-    public static String clockOut = 'Clock Out';
-
-       public static String clockIn = 'Clock In';
     public static String clockOut = 'Clock Out';
     public static String lunch = 'Lunch Break';
     public static String backToWork = 'Back to Work';
